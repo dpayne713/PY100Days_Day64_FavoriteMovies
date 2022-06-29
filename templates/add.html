@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Add a movie{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h2 class="text-center mt-5">Add a movie</h2>
+    <div class="container mt-4">
+        <form action="/search" method="post">
+            {{ form.csrf_token }}
+
+            <div class="row">
+                <div class="col form-floating mb-3">
+                    {{ form.title(class_="form-control", id="searchTitle", placeholder="Movie Title")}}
+                    {{ form.title.label(class_="form-label ms-2") }}
+                </div>
+                <div class="col form-floating mb-3">
+                    {{ form.year(class_="form-control", id="searchYear", placeholder="Year of Release (Optional)")}}
+                    {{ form.year.label(class_="form-label ms-2") }}
+                </div>
+            </div>
+
+            <button type="submit" id="search" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="searchModalLabel">Modal title</h5>
+            <button type="button" class="btn-close closeModal" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="searchModalBody">
+                {# INSERT HTML HERE FOR SEARCH RESULTS #}
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="closeModal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+
+
+
+{% endblock %}

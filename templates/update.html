@@ -1,0 +1,32 @@
+
+    <div class="container mt-4">
+        <form action="/update/{{ movie.id }}" method="post">
+            {{ form.csrf_token }}
+
+            <div class="row">
+                <div class="col mb-3">
+                    <span>{{ movie.title }}</span>
+                    <span>{{ movie.year }}</span>
+                </div>
+                <div class="col mb-3">
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col form-floating mb-3">
+                    {{ form.rating(class_="form-control", id="rating")}}
+                    {{ form.rating.label(class_="form-label ms-2") }}
+                </div>
+                <div class="col form-floating mb-3">
+                    {{ form.ranking(class_="form-control", id="ranking")}}
+                    {{ form.ranking.label(class_="form-label ms-2") }}
+                </div>
+            </div>
+            <div class="form-floating mb-3">
+                {{ form.review(class_="form-control", id="review", style="height:200px")}}
+                {{ form.review.label(class_="form-label") }}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>

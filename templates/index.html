@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Top 10 Movies{% endblock %}
+
+
+{% block body %}
+<div class="container">
+    <div class="center">
+        <h1>My top 10 movies</h1>
+        <hr>
+        <p>these are my favorite movies</p>
+    </div>
+
+    {% for x in movies %}
+        <div class="card">
+            <div class="front">
+                <img class="image" src="{{ x.img_url }}" alt="{{ x.title }} movie poster image">
+                <span class="ranking">{{ x.ranking }}</span>
+            </div>
+            <div class="back content">
+                <div class="heading">
+                    <div class="headline">
+                        <span class="title">{{ x.title }}</span>
+                        <span class="release_date">{{ x.year }}</span>
+                    </div>
+
+                    <p class="rating movie_gens">{{ x.rating }} ⭐</p>
+                    <p class="review movie_gens">{{ x.review }}</p>
+                </div>
+                <div class="description">
+                    <p class="movie_gens">{{ x.description }}</p>
+                </div>
+                <div class="buttons movie_gens">
+                    <button type="button" class="button update-button" data-bs-toggle="modal" data-bs-target="#updateModal" data-id="{{ x.id }}">Update</button>
+                    <button class="button delete-button" data-id="{{ x.id }}">Delete</button>
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+    <div class="container center">
+        <form action="/add_movie">
+            <button type="submit" class="btn btn-primary">Add A Movie</button>
+        </form>
+    </div>
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="myModalLabel">Update</h5>
+            <button type="button" class="btn-close closeModal" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="updateModalBody">
+{#                STUFF GOES HERE#}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary closeModal" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+</div>
+
+{% endblock %}
