@@ -9,21 +9,31 @@ class TheMovieDatabase():
         self.search_data = None
 
     def search_for_movie(self, movie_name, **kwargs):
-        """searches for movie name returns list of id's"""
-        year = kwargs.get('year', None)
-        params= {
-            "api_key": self.v3key,
-            "language": "en-US",
-            "query": movie_name,
-            "year": year,
-            "include_adult": True,
-        }
-        with requests.get(self.endpoint, params=params) as response:
-            response.raise_for_status()
-            data = response.json()['results']
+        """ searches for movie name returns list of id's
+            returns False if blank string
+        """
+        movie_name = movie_name.strip()
+        if movie_name:
 
+            year = kwargs.get('year', None)
+            params= {
+                "api_key": self.v3key,
+                "language": "en-US",
+                "query": movie_name,
+                "year": year,
+                "include_adult": True,
+            }
 
-        self.search_data = data[:10]
+            try:
+                with requests.get(self.endpoint, params=params) as response:
+                    response.raise_for_status()
+                    data = response.json()['results']
+                self.search_data = data[:10]
 
-        return self.search_data
+                return self.search_data
+            except:
+                return "No Movie Found - Please try again"
+        else:
+            return False
+
 

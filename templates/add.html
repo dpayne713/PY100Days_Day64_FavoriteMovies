@@ -6,17 +6,27 @@
 <div class="container">
     <h2 class="text-center mt-5">Add a movie</h2>
     <div class="container mt-4">
-        <form action="/search" method="post">
+        <form action="/add_movie" method="post">
             {{ form.csrf_token }}
 
             <div class="row">
                 <div class="col form-floating mb-3">
                     {{ form.title(class_="form-control", id="searchTitle", placeholder="Movie Title")}}
                     {{ form.title.label(class_="form-label ms-2") }}
+                    {% if form.title.errors %}
+                        {% for error in form.title.errors %}
+                            <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
                 </div>
                 <div class="col form-floating mb-3">
                     {{ form.year(class_="form-control", id="searchYear", placeholder="Year of Release (Optional)")}}
                     {{ form.year.label(class_="form-label ms-2") }}
+                    {% if form.year.errors %}
+                        {% for error in form.year.errors %}
+                            <span class="error">{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
 
@@ -27,7 +37,11 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+    {% if modal %}
+        <div class="modal fade show" style="display: block" id="myModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+    {% else %}
+        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+    {% endif %}
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -35,10 +49,19 @@
             <button type="button" class="btn-close closeModal" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body" id="searchModalBody">
-                {# INSERT HTML HERE FOR SEARCH RESULTS #}
+            <div class="list-group">
+                {% if search_data %}
+                    {% for x in search_data %}
+                        <a href="/add_movie/{{ search_data.index(x) }}" class="list-group-item list-group-item-action">{{ x['original_title'] }}</a>
+                    {% endfor %}
+                {% else %}
+                    <p>No movie found. Try again</p>
+                {% endif %}
+            </div>
           </div>
           <div class="modal-footer">
-            <button type="button" id="closeModal" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+            <button type="button" id="closeModal" class="btn btn-secondary closeModal" data-bs-dismiss="modal">Close</button>
 
           </div>
         </div>

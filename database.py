@@ -16,8 +16,6 @@ class Database():
 
     def add_movie(self, movie_data):
 
-        print(movie_data)
-
         new_movie = self.movie(
             title=movie_data['original_title'],
             year=movie_data['release_date'].split('-')[0],
@@ -54,6 +52,16 @@ class Database():
 
 
     def update_movie(self, movie, data):
+        # Handle possible illegal values to database
+        if not movie.rating:
+            movie.rating = 0.0
+        if 0 > movie.rating > 10.0:
+            movie.rating = 0.0
+        if not movie.ranking:
+            movie.ranking = 10
+        if 0 > movie.ranking > 10:
+            movie.ranking = 10
+
         movie.rating = data['rating']
         movie.ranking = data['ranking']
         movie.review = data['review']
